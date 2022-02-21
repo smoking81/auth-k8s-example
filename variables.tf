@@ -4,7 +4,7 @@ variable "kubeconfig" {
 }
 
 variable "username" {
-  default = "perceval"
+  default = "lancelot"
 }
 
 variable "usergroup" {

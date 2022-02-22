@@ -1,14 +1,15 @@
 variable "kubeconfig" {
   description = "The location of kubeconfig where your admin credentials are stored"
-  default     = "~/Documents/medium/add-user-k8s/config-admin"
+}
+
+variable "kubecontext" {
+  description = "A context for an admin user"
 }
 
 variable "username" {
-  default = "lancelot"
 }
 
 variable "usergroup" {
-  default = "knights"
 }
 
 locals {

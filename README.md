@@ -2,7 +2,7 @@
 You can choose to create the k8s objects (plus certificates) either with kubectl or with terraform.
 
 # kubectl
-Make sure you have the permissions to execute the script.sh and run the script. Your *kubeconfig* will be automatically edited and your context switched.
+Make sure you have the permissions to execute the *script.sh* and run the script. Your *kubeconfig* will be automatically edited and your context switched.
 
 # Terraform script
 If you want to use terraform, make sure you are happy with my var defaults within *terraform.tfvars* and run the following command in the *terraform* directory:

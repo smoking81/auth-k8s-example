@@ -8,6 +8,7 @@ Make sure you have the permissions to execute the *script.sh* and run the script
 If you want to use terraform, make sure you are happy with my var defaults within *terraform.tfvars* (if not, use your own file) and run the following command in the *terraform* directory:
 
 `terraform init`
+
 `terraform apply [-var-file="my-vars.tfvars"]`
 
 Terraform will not edit your *kubeconfig*, so you must add the credentials and the new context manually (i.e. with `kubectl config`)

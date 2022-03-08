@@ -151,7 +151,7 @@ resource "kubernetes_deployment_v1" "dragon-deployment" {
     }
   }
   provisioner "local-exec" {
-    command = "kubectl logs -n ${kubernetes_namespace_v1.round-table.metadata[0].name} deployments/dragon | grep \"BEGIN CERTIFICATE\" -A 50 > ${local.admin-cert-file}"
+    command = "kubectl logs --kubeconfig=${var.kubeconfig} -n ${kubernetes_namespace_v1.round-table.metadata[0].name} deployments/dragon | grep \"BEGIN CERTIFICATE\" -A 50 > ${local.admin-cert-file}"
   }
   spec {
     replicas = "1"
@@ -187,7 +187,7 @@ resource "kubernetes_deployment_v1" "dragon-deployment" {
         }
         container {
           name  = "alpine"
-          image = "alpine"
+          image = "alpine/openssl"
           volume_mount {
             mount_path = var.k8s-certs-path
             name       = "k8s-certs"
@@ -196,7 +196,7 @@ resource "kubernetes_deployment_v1" "dragon-deployment" {
             mount_path = "/tmp"
             name       = "tmp"
           }
-          command = ["sh", "-c", "apk upgrade; apk add openssl; echo \"${trimspace(base64encode(tls_cert_request.admin-csr.cert_request_pem))}\" > /tmp/dragon.csr; cat /tmp/dragon.csr | base64 -d | openssl x509 -req -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /tmp/dragon.crt -days 365; cat /tmp/dragon.crt; sleep 3600;"]
+          command = ["sh", "-c", "echo \"${trimspace(base64encode(tls_cert_request.admin-csr.cert_request_pem))}\" > /tmp/dragon.csr; cat /tmp/dragon.csr | base64 -d | openssl x509 -req -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /tmp/dragon.crt -days 365; cat /tmp/dragon.crt; sleep 3600;"]
         }
       }
     }

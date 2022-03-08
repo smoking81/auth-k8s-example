@@ -63,12 +63,12 @@ spec:
       nodeSelector:
         node-role.kubernetes.io/master: ""
       containers:
-      - image: alpine
+      - image: alpine/openssl
         name: alpine
         command:
         - sh
         - -c
-        - apk upgrade; apk add openssl; echo $(cat dragon.csr | base64 -w0) > /tmp/dragon.csr; cat /tmp/dragon.csr | base64 -d | openssl x509 -req -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /tmp/dragon.crt -days 365; cat /tmp/dragon.crt; sleep 3600;
+        - echo $(cat dragon.csr | base64 -w0) > /tmp/dragon.csr; cat /tmp/dragon.csr | base64 -d | openssl x509 -req -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /tmp/dragon.crt -days 365; cat /tmp/dragon.crt; sleep 3600;
         volumeMounts:
         - mountPath: /etc/kubernetes/pki
           name: k8s-certs
